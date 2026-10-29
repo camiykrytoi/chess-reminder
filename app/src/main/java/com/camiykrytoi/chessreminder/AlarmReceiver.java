@@ -6,25 +6,21 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioAttributes;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import androidx.core.app.NotificationCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    public static final String CHANNEL_ID = "chess_channel_high_priority";
+    public static final String CHANNEL_ID = "chess_channel_silent_v2";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // 1. Wake up device CPU so notification is handled reliably in Doze mode
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = null;
         if (pm != null) {
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ChessReminder:AlarmWakeLock");
-            wakeLock.acquire(15000); // 15 seconds
+            wakeLock.acquire(10000);
         }
 
         String title = intent.getStringExtra("EXTRA_TITLE");
@@ -39,7 +35,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         showNotification(context, reqCode, title, text);
 
-        // 2. Reschedule next week's occurrence automatically
         if (dayOfWeek != -1 && hour != -1 && minute != -1) {
             AlarmScheduler.scheduleSlot(context, reqCode, dayOfWeek, hour, minute, title, text);
         }
@@ -55,27 +50,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (nm == null) return;
 
-        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (soundUri == null) {
-            soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-
+        // Channel strictly without sound and without vibration
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                 CHANNEL_ID,
-                "РЁР°С…РјР°С‚С‹ (Р“СЂРѕРјРєРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ)",
+                "РЁР°С…РјР°С‚С‹ (РўРѕР»СЊРєРѕ СЃРѕРѕР±С‰РµРЅРёРµ)",
                 NotificationManager.IMPORTANCE_HIGH
             );
-            channel.setDescription("Р’Р°Р¶РЅС‹Рµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ Рѕ С€Р°С…РјР°С‚Р°С… РІРѕ РІС‚РѕСЂРЅРёРє Рё РїСЏС‚РЅРёС†Сѓ");
-            channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{0, 800, 300, 800, 300, 800});
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build();
-            channel.setSound(soundUri, audioAttributes);
+            channel.setDescription("РўРёС…РёРµ С‚РµРєСЃС‚РѕРІС‹Рµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ Р±РµР· Р·РІСѓРєР° Рё РІРёР±СЂР°С†РёРё");
+            channel.enableVibration(false);
+            channel.setVibrationPattern(new long[]{0});
+            channel.setSound(null, null); // РџРѕР»РЅРѕСЃС‚СЊСЋ Р±РµР· Р·РІСѓРєР°
             channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-            channel.setBypassDnd(true);
             nm.createNotificationChannel(channel);
         }
 
@@ -86,16 +72,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         PendingIntent contentPi = PendingIntent.getActivity(context, notificationId, openIntent, flags);
 
+        // Silent banner notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSound(soundUri)
-            .setVibrate(new long[]{0, 800, 300, 800, 300, 800})
+            .setSound(null)      // Р‘Р•Р— Р—Р’РЈРљРђ
+            .setVibrate(null)    // Р‘Р•Р— Р’РР‘Р РђР¦РР
             .setAutoCancel(true)
             .setContentIntent(contentPi);
 
