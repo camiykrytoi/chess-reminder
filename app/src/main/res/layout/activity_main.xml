@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="в™џпёЏ РЁР°С…РјР°С‚С‹"
+            android:textColor="@color/text_main"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="РќР°РїРѕРјРёРЅР°РЅРёСЏ Р±РµР· РїСЂРѕРїСѓСЃРєРѕРІ"
+            android:textColor="@color/accent"
+            android:textSize="15sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Status Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvNextAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Р—Р°РіСЂСѓР·РєР° СЂР°СЃРїРёСЃР°РЅРёСЏ..."
+                    android:textColor="@color/green_status"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAlarmDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Р’С‚РѕСЂРЅРёРє Рё РџСЏС‚РЅРёС†Р°:\nвЂў 10:00 вЂ” РЈС‚СЂРµРЅРЅРµРµ РЅР°РїРѕРјРёРЅР°РЅРёРµ\nвЂў 17:00 вЂ” Р’С‹С…РѕРґ С‡РµСЂРµР· 30 РјРёРЅ (РІ 17:30)"
+                    android:textColor="@color/text_main"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Permissions Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="рџ›ЎпёЏ Р—Р°С‰РёС‚Р° РѕС‚ РѕРіСЂР°РЅРёС‡РµРЅРёР№ СЃРёСЃС‚РµРјС‹"
+                    android:textColor="@color/text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Р§С‚РѕР±С‹ Android РЅРµ РіР»СѓС€РёР» РЅР°РїРѕРјРёРЅР°РЅРёСЏ РІ С„РѕРЅРµ Рё РїСЂРё РІС‹РєР»СЋС‡РµРЅРЅРѕРј СЌРєСЂР°РЅРµ, СЂР°Р·СЂРµС€РёС‚Рµ СЂР°Р±РѕС‚Сѓ Р±РµР· РѕРіСЂР°РЅРёС‡РµРЅРёР№ Р±Р°С‚Р°СЂРµРё."
+                    android:textColor="@color/text_muted"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="12dp" />
+
+                <Button
+                    android:id="@+id/btnBatteryOpt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="вљЎ РћС‚РєР»СЋС‡РёС‚СЊ РѕРїС‚РёРјРёР·Р°С†РёСЋ Р±Р°С‚Р°СЂРµРё"
+                    android:backgroundTint="#D97706"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnExactAlarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="вЏ° Р Р°Р·СЂРµС€РёС‚СЊ С‚РѕС‡РЅС‹Рµ Р±СѓРґРёР»СЊРЅРёРєРё"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#475569"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Actions -->
+        <Button
+            android:id="@+id/btnReschedule"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="рџ”„ Р’РєР»СЋС‡РёС‚СЊ / РћР±РЅРѕРІРёС‚СЊ Р±СѓРґРёР»СЊРЅРёРєРё"
+            android:backgroundTint="@color/btn_bg"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnTestAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="рџ”” РџСЂРѕРІРµСЂРёС‚СЊ Р·РІРѕРЅРѕРє (РўРµСЃС‚ СЃРµР№С‡Р°СЃ)"
+            android:backgroundTint="#059669"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>
